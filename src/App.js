@@ -4,15 +4,32 @@ import {useState} from "react";
 function App() {
   const [weight, setWeight] = useState(0);
   const [bottles, setBottles] = useState(0);
-  const [time, setTime] = useState(0)
+  const [time, setTime] = useState(0);
+
+  let gender = document.getElementsByName("gender");
+
   function subHandle(e) {
     e.preventDefault();
     let liters = bottles * 0.33;
     let grams = liters * 8 * 4.5;
     let burning = weight / 10;
     let gramsLeft = grams - (burning * time);
+    let result = 0;
+    
+    if(gramsLeft < 0) {
+      gramsLeft = 0
+    }
 
-    document.querySelector("div#alcoResult").textContent = gramsLeft
+    switch (gender.value) {
+      case 0:
+        result = gramsLeft / (weight * 0.7);
+        break;
+      case 1:
+        result = gramsLeft / (weight * 0.6);
+        break;
+    }
+
+    document.querySelector("div#alcoResult").textContent = result.toFixed(2);
   }
 
 
@@ -50,8 +67,8 @@ function App() {
         </div>
         <div>
           <label htmlFor="gender">Gender </label>
-          <input type="radio" name="gender" id="male" value={0} /> <label htmlFor="male">Male</label>
-          <input type="radio" name="gender" id="female" value={1} /> <label htmlFor="female">Female</label>
+          <input type="radio" name="gender" id="male" value={0}/> <label htmlFor="male">Male</label>
+          <input type="radio" name="gender" id="female" value={1}/> <label htmlFor="female">Female</label>
         </div>
         <div id='alcoResult'>0</div>
         <button>Calculate</button>
