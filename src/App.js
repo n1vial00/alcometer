@@ -5,8 +5,7 @@ function App() {
   const [weight, setWeight] = useState(0);
   const [bottles, setBottles] = useState(0);
   const [time, setTime] = useState(0);
-
-  let gender = document.getElementsByName("gender");
+  const [gender, setGender] = useState("male");
 
   function subHandle(e) {
     e.preventDefault();
@@ -20,12 +19,12 @@ function App() {
       gramsLeft = 0
     }
 
-    switch (gender.value) {
-      case 0:
-        result = gramsLeft / (weight * 0.7);
+    switch (gender) {
+      case "male":
+        result = (gramsLeft / (weight * 0.7));
         break;
-      case 1:
-        result = gramsLeft / (weight * 0.6);
+      case "female":
+        result = (gramsLeft / (weight * 0.6));
         break;
     }
 
@@ -40,12 +39,13 @@ function App() {
           <h1>Alcometer</h1>
         </div>
         <div>
-          <label htmlFor="weight">Weight: </label>
+          <label htmlFor="weight">Weight of the consumer (kg) </label>
           <input id="weight" type="number" min={0} value={weight} onChange={e => setWeight(e.target.value)}/>
         </div>
         <div>
-          <label htmlFor="bottles">Bottles: </label>
-          <select name="bottles" id="" value={bottles} onChange={e => setBottles(e.target.value)}>
+          <label htmlFor="bottles">Bottles consumed (0.33 l) </label>
+          <select name="bottles" id="bottles" value={bottles} onChange={e => setBottles(e.target.value)}>
+            <option value="0">0</option>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -55,8 +55,9 @@ function App() {
           </select>
         </div>
         <div>
-          <label htmlFor="time" >Time: </label>
+          <label htmlFor="time" >Time passed (h) </label>
           <select name="time" id="time" value={time} onChange={e => setTime(e.target.value)}>
+            <option value="0">0</option>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -67,10 +68,10 @@ function App() {
         </div>
         <div>
           <label htmlFor="gender">Gender </label>
-          <input type="radio" name="gender" id="male" value={0}/> <label htmlFor="male">Male</label>
-          <input type="radio" name="gender" id="female" value={1}/> <label htmlFor="female">Female</label>
+          <input type="radio" name="gender" id="male" value="male" defaultChecked onChange= {e => setGender(e.target.value)} /> <label htmlFor="male">Male</label>
+          <input type="radio" name="gender" id="female" value="female" onChange= {e => setGender(e.target.value)}/> <label htmlFor="female">Female</label>
         </div>
-        <div id='alcoResult'>0</div>
+        <div id='alcoResult'>0.00</div>
         <button>Calculate</button>
       </form>
     </div>
